@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2 class="text-center mt-4" style="font-weight:600;">Dashboard Summary</h2>
+
+@if (ViewBag.Warning != null)
+{
+    <div class="alert alert-danger text-center" style="font-size:18px; font-weight:600;">
+        @ViewBag.Warning
+    </div>
+}
+
+<!-- SUMMARY CARDS -->
+<div class="row mt-4 justify-content-center">
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3 text-center" style="border-left:5px solid green;">
+            <h5>Total Budget</h5>
+            <h3 style="color:green; font-weight:700;">₹@ViewBag.Budget</h3>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3 text-center" style="border-left:5px solid red;">
+            <h5>Total Expense</h5>
+            <h3 style="color:red; font-weight:700;">₹@ViewBag.Expense</h3>
+        </div>
+    </div>
+</div>
+
+<!-- SWITCH BUTTONS -->
+<div class="text-center mt-3">
+    <button id="barBtn" class="btn btn-outline-primary btn-sm">Bar Chart</button>
+    <button id="pieBtn" class="btn btn-outline-success btn-sm">Pie Chart</button>
+</div>
+
+<!-- BIGGER COMPACT CHART -->
+<div class="mt-3 d-flex justify-content-center">
+    <div style="width: 450px; height: 320px;">
+        <canvas id="budgetExpenseChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var labels = ["Budget", "Expense"];
+    var dataValues = [@ViewBag.Budget, @ViewBag.Expense];
+
+    var chartType = "pie";
+    var chartInstance;
+
+    function loadChart() {
+        var ctx = document.getElementById("budgetExpenseChart").getContext("2d");
+
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+
+        chartInstance = new Chart(ctx, {
+            type: chartType,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Budget vs Expense",
+                    data: dataValues,
+                    backgroundColor: ["#1cc88a", "#e74a3b"]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            }
+        });
+    }
+
+    // Default chart load
+    loadChart();
+
+    document.getElementById("pieBtn").addEventListener("click", function () {
+        chartType = "pie";
+        loadChart();
+    });
+
+    document.getElementById("barBtn").addEventListener("click", function () {
+        chartType = "bar";
+        loadChart();
+    });
+</script>

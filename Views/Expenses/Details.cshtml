@@ -1,0 +1,41 @@
+﻿
+@model BudgetExpenceProject.Models.Expense
+
+<h2>Expense Details</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Category</th>
+        <td>@Model.Category.CategoryName</td>
+    </tr>
+
+    <tr>
+        <th>Amount</th>
+        <td>@Model.Amount</td>
+    </tr>
+
+    <tr>
+        <th>Date</th>
+        <td>@Model.Date.ToShortDateString()</td>
+    </tr>
+
+    <tr>
+        <th>Payment Method</th>
+        <td>@Model.PaymentMethod</td>
+    </tr>
+
+    <tr>
+        <th>Note</th>
+        <td>@Model.Note</td>
+    </tr>
+
+    <tr>
+        <th>User</th>
+        <td>@Model.Login.FullName</td>
+    </tr>
+</table>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ExpenseId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</p>

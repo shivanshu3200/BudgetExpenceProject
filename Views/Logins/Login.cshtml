@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<div style="width: 400px; margin: 60px auto; padding: 30px; border: 2px solid green; border-radius: 10px; background: #f9fff9; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+
+    <h2 class="text-center" style="color: green; font-weight: bold;">Login</h2>
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        <div>
+            <label style="font-weight: bold;">Email</label>
+            <input type="text" name="Email" class="form-control" placeholder="Enter your email" required />
+        </div>
+
+        <div style="margin-top: 15px;">
+            <label style="font-weight: bold;">Password</label>
+            <input type="password" name="Password" class="form-control" placeholder="Enter password" required />
+        </div>
+
+        <button type="submit" class="btn btn-success w-100" style="margin-top: 20px;">
+            Login
+        </button>
+
+        <div class="text-center mt-3">
+            <a href="/Logins/Create" class="btn btn-link">Create New Account</a>
+        </div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <p style="color:red; text-align:center; margin-top:10px;">
+            @ViewBag.Error
+        </p>
+    }
+</div>

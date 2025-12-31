@@ -1,0 +1,85 @@
+﻿
+@model IEnumerable<BudgetExpenceProject.Models.Category>
+
+<h2>Dashboard (Category Overview)</h2>
+
+<p>
+    @Html.ActionLink("Create New Category", "Create", null, new { @class = "btn btn-primary mb-3" })
+</p>
+
+<!-- GRAPH TYPE BUTTONS -->
+<div class="text-center mb-3">
+    <button id="pieBtn" class="btn btn-success">Pie Chart</button>
+    <button id="barBtn" class="btn btn-primary">Bar Chart</button>
+</div>
+
+<!-- CANVAS FOR GRAPH -->
+<div class="mb-5">
+    <canvas id="chartCanvas" height="120"></canvas>
+</div>
+
+<!-- CATEGORY TABLE -->
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Category Name</th>
+        <th>Type</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CategoryName</td>
+            <td>@item.Type</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CategoryId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CategoryId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
+            </td>
+        </tr>
+    }
+</table>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var labels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Labels));
+    var data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Data));
+
+    var chartType = 'pie';
+    var chartInstance;
+
+    function loadChart() {
+        var ctx = document.getElementById('chartCanvas').getContext('2d');
+
+        if (chartInstance) chartInstance.destroy();
+
+        chartInstance = new Chart(ctx, {
+            type: chartType,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Category-wise Expenses",
+                    data: data,
+                    backgroundColor: [
+                        "#ff6384", "#36a2eb", "#ffce56", "#4bc0c0", "#9966ff",
+                        "#ff9f40", "#66ff99", "#ff6666"
+                    ]
+                }]
+            }
+        });
+    }
+
+    loadChart();
+
+    document.getElementById("pieBtn").onclick = function () {
+        chartType = "pie";
+        loadChart();
+    };
+
+    document.getElementById("barBtn").onclick = function () {
+        chartType = "bar";
+        loadChart();
+    };
+</script>

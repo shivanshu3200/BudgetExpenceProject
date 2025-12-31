@@ -1,0 +1,24 @@
+﻿
+@model BudgetExpenceProject.Models.Budget
+
+<h2>Create Budget</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <label>Budget Amount</label>
+        @Html.TextBoxFor(m => m.BudgetAmount, new { @class = "form-control", type = "number" })
+    </div>
+
+    <div class="form-group">
+        <label>Start Date</label>
+        @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control", type = "date" })
+    </div>
+
+    <div class="form-group">
+        <label>End Date</label>
+        @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", type = "date" })
+    </div>
+
+    <button class="btn btn-success mt-3 w-100">Create Budget</button>
+}

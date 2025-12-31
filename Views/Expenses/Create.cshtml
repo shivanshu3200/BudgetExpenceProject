@@ -1,0 +1,40 @@
+﻿
+@model BudgetExpenceProject.Models.Expense
+
+<h2>Create Expense</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <label>Category</label>
+        @Html.DropDownList("CategoryId", null, "-- Select Category --", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Amount</label>
+        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", type = "number" })
+    </div>
+
+    <div class="form-group">
+        <label>Date</label>
+        @Html.TextBoxFor(m => m.Date, new { @class = "form-control", type = "date" })
+    </div>
+
+    <div class="form-group">
+        <label>Payment Method</label>
+        @Html.TextBoxFor(m => m.PaymentMethod, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Note</label>
+        @Html.TextBoxFor(m => m.Note, new { @class = "form-control" })
+    </div>
+
+    <br />
+    <button class="btn btn-primary">Create Expense</button>
+}
